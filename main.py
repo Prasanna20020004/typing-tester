@@ -5,7 +5,7 @@ from tkinter import messagebox
 from word import word_list
 
 TIMER = 10
-number_of_words = 3
+number_of_words = 10
 words = ""
 user_total = ""
 word_total = ""
