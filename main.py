@@ -4,11 +4,18 @@ from tkinter import *
 from tkinter import messagebox
 from word import word_list
 
-TIMER = 5
-number_of_words = 10
+TIMER = 10
+number_of_words = 3
 words = ""
 user_total = ""
 word_total = ""
+
+
+def timer_set():
+    global TIMER
+    TIMER = int(set_timer.get())
+    set_timer.config(state="disabled")
+    set_button.config(state="disabled")
 
 
 def generate_words():
@@ -44,10 +51,13 @@ def count_down(time_left):
         start_button.config(state="normal")
         user_input.delete(0, END)
         user_input.config(state="disabled")
+        set_timer.config(state="normal")
+        set_timer.delete(0, END)
+        set_button.config(state="normal")
         canvas.itemconfig(test_text, text="Click start to start the test.")
 
     if time_left > 0:
-        window.after(100, check, time_left)
+        window.after(1, check, time_left)
         window.after(1000, count_down, time_left - 1)
 
 
@@ -69,8 +79,6 @@ def check(rtime):
         accuracy = get_accuracy(user_total.strip(), word_total.strip())
         messagebox.showinfo(title="Result",
                             message=f"Your typing results are:\nSpeed: {speed} WPM\nAccuracy: {accuracy}%")
-        print(user_text)
-        print(user_total.strip().split(" "))
 
 
 def get_accuracy(user, word):
@@ -93,11 +101,18 @@ window.minsize(700, 500)
 window.title("Typing Tester")
 window.config(pady=100, padx=100)
 
+set_label = Label(text="Set timer default 10sec (type number of seconds):")
+set_label.grid(column=2, row=0)
+set_timer = Entry()
+set_timer.grid(column=2, row=1)
+set_button = Button(text="Set", command=timer_set)
+set_button.grid(column=2, row=2)
+
 timer_text = Label(text="Timer: 00:00", font=("Arial", 24, "bold"), fg="red")
-timer_text.grid(column=2, row=0)
+timer_text.grid(column=2, row=3)
 
 canvas = Canvas(height=100, width=700)
-canvas.grid(column=2, row=1, columnspan=2)
+canvas.grid(column=2, row=4, columnspan=2)
 canvas.config(bg="black")
 test_text = canvas.create_text(350, 50,
                                width=600,
@@ -107,9 +122,9 @@ test_text = canvas.create_text(350, 50,
 
 user_input = Entry(width=63, font=("Helvetica", 15))
 user_input.config(state="disabled")
-user_input.grid(column=2, row=2, columnspan=2)
+user_input.grid(column=2, row=5, columnspan=2)
 
 start_button = Button(text="Start the test", bg="green", font=("Arial", 15, "bold"), command=start)
-start_button.grid(column=2, row=3)
+start_button.grid(column=2, row=6)
 
 window.mainloop()
