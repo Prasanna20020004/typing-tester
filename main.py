@@ -65,7 +65,7 @@ def check(rtime):
     if rtime == 0:
         user_total = user_total + " " + user_input.get()
         word_total = word_total + " " + words[0:len(user_input.get())]
-        speed = len(user_total.strip().split(" ")) * 6
+        speed = len(user_total.strip().split(" ")) * (60 / TIMER)
         accuracy = get_accuracy(user_total.strip(), word_total.strip())
         messagebox.showinfo(title="Result",
                             message=f"Your typing results are:\nSpeed: {speed} WPM\nAccuracy: {accuracy}%")
